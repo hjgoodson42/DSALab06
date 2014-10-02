@@ -69,8 +69,8 @@ T* StackLinked<T>::peek()
 {
    T* item = NULL;
    //DO THIS
-
-
+   
+   return top;
 
 
 
@@ -81,7 +81,10 @@ void StackLinked<T>::push(T* item)
 {
    //DO THIS
 
-
+   NextNode<T>* node = new NextNode<T>(item);
+   node->setNext(top);
+   top = node;
+   sz++;
 
 
 }
