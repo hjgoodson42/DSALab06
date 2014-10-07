@@ -2,6 +2,7 @@
 #define STACKLINKED_H
 
 #include "NextNode.h"
+#include "StackLinked.h"
 
 template < class T >
 class StackLinked
@@ -9,7 +10,7 @@ class StackLinked
    private:
       NextNode<T>* top;
       int sze;  // number of items in the stack
-
+	
    public:
       StackLinked();
       ~StackLinked();
@@ -67,13 +68,16 @@ void StackLinked<T>::popAll()
 template < class T >
 T* StackLinked<T>::peek()
 {
+	
    T* item = NULL;
    //DO THIS
-   
-   return top;
-
-
-
+   if (!isEmpty()) 
+   {  
+      item = top->getItem();
+   }
+   return item;
+	
+	
 }
 
 template < class T >
@@ -84,7 +88,7 @@ void StackLinked<T>::push(T* item)
    NextNode<T>* node = new NextNode<T>(item);
    node->setNext(top);
    top = node;
-   sz++;
+   sze++;
 
 
 }
@@ -92,15 +96,14 @@ void StackLinked<T>::push(T* item)
 template < class T >
 T* StackLinked<T>::pop()
 {
-   if (sze == 0) return NULL;
-
+	T* item = NULL;
+    NextNode<T>* curr = NULL;
    //DO THIS
       if (sze == 0) return NULL;
    else
-   T* item = NULL;
    if (sze > 0)
    {
-	NextNode<T>* curr = top;
+	curr = top;
 	item = top->getItem();
 	top = top->getNext();
    }

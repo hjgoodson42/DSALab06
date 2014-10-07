@@ -3,7 +3,8 @@
 #include "Rect.h"
 
 #include <windows.h>  //for the sleep function
-
+#include "Matrix.h"
+using CSC2110::Matrix;
 #include <iostream>
 using namespace std;
 
@@ -54,7 +55,7 @@ Cell* Maze::processBackTrack(StackLinked<Cell>* stack)
       //remove the cell and set the maze location to BACKTRACK (the maze is a Matrix)
 
       maze->setElement(top_cell->getRow(), top_cell->getCol(), BACKTRACK);
-      stack->pop(top_cell);
+      stack->pop();
       
 
 
@@ -75,26 +76,27 @@ bool Maze::isSolved(Cell* curr_cell, StackLinked<Cell>* stack)
 {
    //DO THIS
    //get row and col from curr_cell
-
-
+   int x = curr_cell->getRow();
+   int y = curr_cell->getCol();
+   int end = maze->getElement(x,y);
 
    //have you solved the maze? (check that we are at the bottom right maze location and that it is a SPACE
-   if (                                                          )  
+   if (x == width && y == height &&  end == SPACE)  
    {
 
 
       //set the maze location to TRIED
-
+	  maze->setElement(x,y, TRIED);
 
       //push curr_cell
-
+	  stack->push(curr_cell);
 
       gui->update();
       //return the appropriate boolean
-
+	  return true;
    }
-
-
+	else 
+	return false;
    //return the appropriate boolean
 }
 
@@ -103,17 +105,19 @@ void Maze::processSolution(StackLinked<Cell>* stack)
 {
    //DO THIS
    //the stack has the solution path stored
-   while(                    )
+   while(!stack->isEmpty())
    {
       //get the next cell from the stack
-
-
-      
+	  Cell* point = stack->peek();
+	  int h = point->getRow();
+	  int w = point->getCol();
+	  
+      maze->setElement(h,w,PATH);
       //update the maze location to PATH
-
-
-
-
+	
+	
+	  point = stack->pop();
+	
       gui->update();
    }
 }
@@ -175,7 +179,7 @@ bool Maze::traverse()
          //DO THIS
          //delete the cell
 
-         stack->pop(curr_cell);
+         stack.pop();
 
       }
    }
