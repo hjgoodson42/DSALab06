@@ -144,7 +144,7 @@ bool Maze::traverse()
       //call a method in the Cell class to give you a new Cell in a new direction relative to top_cell (initially, DOWN)
       //DO THIS
       Cell* curr_cell = top_cell->nextCell();
-
+	  curr_cell = curr_cell->nextCell();
 
 
 
@@ -159,17 +159,19 @@ bool Maze::traverse()
       int col = curr_cell->getCol();
 
       //check that the current cell corresponds to SPACE, otherwise delete it
-      if (maze->getElement(height, width) == 1)
+      if (maze->getElement(row, col) == 1)
       {
          //update the cell to TRIED
          //put the cell on the stack (move forward through the maze)
 
          maze->setElement(row, col, TRIED);
          stack.push(curr_cell);
-
-
-
-
+		 curr_cell = curr_cell->nextCell();
+		 
+		 if (curr_cell->getDir() == DEAD_END)
+			{
+			curr_cell->processBackTrack(&stack);
+			}
 
          Sleep(75);  //slow down the maze traversal
          gui->update();
